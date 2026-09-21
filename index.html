@@ -4164,6 +4164,170 @@
       }
     }
 
+  
+    /* =========================================================
+       MOBILE OPTIMIZATION — SEPT 2026
+       Desktop layout remains unchanged.
+       ========================================================= */
+
+    .booking-stay-mobile,
+    .shared-photo-mobile-copy { display: none; }
+
+    .stay-card-image img,
+    .shared-photo img { cursor: zoom-in; }
+
+    .property-lightbox {
+      position: fixed; inset: 0; z-index: 5000;
+      display: none; align-items: center; justify-content: center;
+      padding: 18px; background: rgba(4,12,9,.94);
+    }
+    .property-lightbox.open { display: flex; }
+    .property-lightbox img {
+      max-width: 96vw; max-height: 90vh; object-fit: contain;
+      border-radius: 14px; box-shadow: 0 24px 80px rgba(0,0,0,.42);
+    }
+    .property-lightbox-close {
+      position: fixed; top: max(18px,env(safe-area-inset-top)); right: 18px;
+      width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.28);
+      border-radius: 50%; background: rgba(255,255,255,.10); color: #fff;
+      font-size: 28px; cursor: pointer; backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 760px) {
+      /* STAY */
+      .stay-section { padding: 42px 16px 52px; }
+      .stay-section .section-kicker { margin-bottom: 8px; font-size: 8px; letter-spacing: .16em; }
+      .stay-section .section-kicker::before { width: 22px; }
+      .stay-heading { margin-bottom: 10px; font-size: clamp(32px,9.4vw,42px); line-height: .98; }
+      .stay-intro { margin-bottom: 18px; font-size: 12.5px; line-height: 1.46; }
+      .stay-grid { gap: 14px; }
+      .stay-card { border-radius: 18px; }
+      .stay-card-image { aspect-ratio: auto; height: 168px; }
+      .stay-card-badge { top: 10px; left: 10px; min-height: 26px; padding: 0 10px; font-size: 8px; }
+      .stay-card-body { padding: 13px 14px 15px; }
+      .stay-card-topline { margin-bottom: 5px; gap: 8px; }
+      .stay-card-type { font-size: 8px; letter-spacing: .14em; }
+      .stay-capacity { font-size: 10px; }
+      .stay-card-title { margin-bottom: 6px; font-size: 26px; }
+      .stay-card-copy { margin-bottom: 9px; font-size: 11.5px; line-height: 1.42; }
+      .stay-features { gap: 5px; margin-bottom: 10px; }
+      .stay-feature { min-height: 26px; padding: 0 8px; font-size: 9px; }
+      .stay-shared-note { margin-bottom: 10px; padding: 8px 10px; border-radius: 11px; font-size: 9.5px; line-height: 1.35; }
+      .stay-shared-dot { width: 6px; height: 6px; margin-top: 4px; }
+      .stay-card-link { min-height: 36px; padding: 0 13px; font-size: 10px; }
+      .residence-card .stay-card-image { min-height: 0; height: 190px; aspect-ratio: auto; }
+      .residence-card .stay-card-body { padding: 16px 14px 18px; }
+      .smart-choice { margin-top: 14px; padding: 13px 14px; border-radius: 14px; }
+      .smart-choice strong, .smart-choice span { font-size: 10px; }
+
+      /* BOOKING */
+      .booking-section { padding: 44px 16px 52px; }
+      .booking-head { gap: 8px; margin-bottom: 14px; }
+      .booking-section .section-kicker { margin-bottom: 6px; font-size: 8px; }
+      .booking-title { margin-top: 4px; font-size: clamp(34px,9.6vw,44px); line-height: .97; }
+      .booking-intro { margin-top: 2px; font-size: 11.5px; line-height: 1.45; }
+      .booking-card { display: block; }
+      .booking-form { padding: 14px; border-radius: 18px; }
+      .booking-fields { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+      .booking-field { gap: 4px; }
+      .booking-field.full { grid-column: 1 / -1; }
+      .booking-field label { font-size: 7.5px; }
+      .booking-field input, .booking-field select, .booking-field textarea {
+        min-height: 40px; padding: 0 10px; border-radius: 11px; font-size: 11px;
+      }
+      .booking-field textarea { min-height: 58px; padding-top: 10px; }
+      .booking-choice-title { margin: 13px 0 7px; font-size: 7.5px; }
+      .booking-stay-options { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
+      .booking-stay-box {
+        min-height: 62px; padding: 8px 7px; border-radius: 11px;
+        justify-content: center; gap: 3px; text-align: center;
+      }
+      .booking-stay-box strong { font-size: 13px; line-height: 1.05; }
+      .booking-stay-box span { margin-top: 2px; font-size: 8px; line-height: 1.2; }
+      .booking-stay-desktop { display: none; }
+      .booking-stay-mobile { display: block; }
+      .booking-smart-note { display: none; }
+      .booking-submit { min-height: 44px; margin-top: 11px; font-size: 11px; }
+      .booking-summary { display: none; }
+
+      /* SHARED SPACES */
+      .shared-section { padding: 56px 16px 58px; }
+      .shared-head { gap: 10px; margin-bottom: 18px; }
+      .shared-section .section-kicker { margin-bottom: 8px; font-size: 8px; }
+      .shared-title { font-size: clamp(34px,9.5vw,44px); }
+      .shared-intro { font-size: 12px; line-height: 1.5; }
+      .shared-gallery { gap: 10px; margin-right: -16px; padding-right: 16px; margin-bottom: 0; }
+      .shared-photo, .shared-photo-large, .shared-photo:not(.shared-photo-large) {
+        flex: 0 0 80vw; min-height: 335px; border-radius: 18px;
+      }
+      .shared-photo-label { left: 14px; right: 14px; bottom: 13px; display: block; }
+      .shared-photo-label strong { font-size: 24px; }
+      .shared-photo-label > span { display: none; }
+      .shared-photo-mobile-copy {
+        display: block; margin-top: 7px; max-width: 92%;
+        color: rgba(255,255,255,.78); font-size: 10.5px; line-height: 1.42;
+      }
+      .shared-info-grid, .shared-logic { display: none; }
+
+      /* AMENITIES */
+      .amenities-section { padding: 54px 16px 58px; }
+      .amenities-head { gap: 8px; margin-bottom: 18px; }
+      .amenities-title { margin-top: 6px; font-size: clamp(35px,9.6vw,45px); }
+      .amenities-intro { font-size: 12px; line-height: 1.5; }
+      .amenities-highlights { gap: 8px; margin-right: -16px; padding-right: 16px; margin-bottom: 12px; }
+      .amenity-highlight { flex: 0 0 56vw; min-height: 92px; padding: 14px; border-radius: 16px; }
+      .amenity-highlight strong { margin-bottom: 4px; font-size: 20px; }
+      .amenity-highlight span { font-size: 10.5px; line-height: 1.4; }
+      .amenities-grid {
+        display: flex; gap: 9px; overflow-x: auto; margin-right: -16px;
+        padding-right: 16px; padding-bottom: 4px; scroll-snap-type: x mandatory; scrollbar-width: none;
+      }
+      .amenities-grid::-webkit-scrollbar { display: none; }
+      .amenity-group {
+        flex: 0 0 76vw; min-height: 230px; padding: 17px 16px;
+        border-radius: 18px; scroll-snap-align: start;
+      }
+      .amenity-group-label { margin-bottom: 9px; font-size: 8px; }
+      .amenity-group h3 { margin-bottom: 11px; font-size: 24px; }
+      .amenity-list { gap: 7px; }
+      .amenity-item { font-size: 10.5px; line-height: 1.35; }
+      .amenities-note { display: none; }
+
+      /* EXPLORE */
+      .eb-browser { padding: 44px 0 56px; }
+      .eb-browser-title { font-size: clamp(34px,9.5vw,44px); }
+      .eb-browser-lead { font-size: 11.5px; line-height: 1.5; }
+      .eb-strip { margin-top: 14px; padding: 17px 0 9px; }
+      .eb-strip-head { margin-bottom: 10px; }
+      .eb-strip-head h3 { font-size: clamp(26px,7.8vw,34px); }
+      .eb-strip-head p { font-size: 10.5px; line-height: 1.4; }
+      .eb-card { flex: 0 0 68vw; max-width: 265px; border-radius: 17px; }
+      .eb-card-image { height: 140px; }
+      .eb-card-body { min-height: 166px; padding: 12px; }
+      .eb-card-body h4 { font-size: 20px; }
+      .eb-card-body p { margin-top: 5px; font-size: 9.5px; line-height: 1.4; -webkit-line-clamp: 2; }
+      .eb-meta { gap: 4px; margin-top: 7px; }
+      .eb-pill { padding: 4px 6px; font-size: 8px; }
+      .eb-actions { gap: 5px; padding-top: 9px; }
+      .eb-detail, .eb-action { min-height: 31px; padding: 0 9px; font-size: 8.5px; }
+      .eb-source-note { margin-top: 10px; font-size: 9px; }
+    }
+
+    @media (max-width: 430px) {
+      .stay-heading { font-size: 30px; }
+      .stay-card-image { height: 154px; }
+      .stay-card-copy { font-size: 11px; }
+      .booking-title { font-size: 32px; }
+      .booking-stay-box strong { font-size: 11.5px; }
+      .booking-stay-box span { font-size: 7.5px; }
+      .shared-photo, .shared-photo-large, .shared-photo:not(.shared-photo-large) {
+        flex-basis: 82vw; min-height: 315px;
+      }
+      .amenity-highlight { flex-basis: 62vw; }
+      .amenity-group { flex-basis: 80vw; }
+      .eb-card { flex-basis: 72vw; }
+    }
+
   </style>
 </head>
 
@@ -4627,7 +4791,8 @@
               <input type="radio" name="bookingStay" value="suite1" checked>
               <span class="booking-stay-box">
                 <strong data-i18n="bookingSuite1">Suita 1</strong>
-                <span data-i18n="bookingSuiteSmall">pentru 1–2 persoane</span>
+                <span class="booking-stay-desktop" data-i18n="bookingSuiteSmall">pentru 1–2 persoane</span>
+                <span class="booking-stay-mobile" data-i18n="bookingSuiteSmallMobile">1–2 persoane</span>
               </span>
             </label>
 
@@ -4635,7 +4800,8 @@
               <input type="radio" name="bookingStay" value="suite2">
               <span class="booking-stay-box">
                 <strong data-i18n="bookingSuite2">Suita 2</strong>
-                <span data-i18n="bookingSuiteSmall">pentru 1–2 persoane</span>
+                <span class="booking-stay-desktop" data-i18n="bookingSuiteSmall">pentru 1–2 persoane</span>
+                <span class="booking-stay-mobile" data-i18n="bookingSuiteSmallMobile">1–2 persoane</span>
               </span>
             </label>
 
@@ -4643,7 +4809,8 @@
               <input type="radio" name="bookingStay" value="entire">
               <span class="booking-stay-box">
                 <strong data-i18n="bookingEntire">Întreaga reședință</strong>
-                <span data-i18n="bookingEntireSmall">pentru 1–6 persoane</span>
+                <span class="booking-stay-desktop" data-i18n="bookingEntireSmall">pentru 1–6 persoane</span>
+                <span class="booking-stay-mobile" data-i18n="bookingEntireSmallMobile">1–6 persoane</span>
               </span>
             </label>
 
@@ -4751,7 +4918,13 @@
           >
 
           <figcaption class="shared-photo-label">
-            <strong data-i18n="sharedLivingTitle">Livingul principal</strong>
+            <div>
+              <strong data-i18n="sharedLivingTitle">Livingul principal</strong>
+              <p class="shared-photo-mobile-copy" data-i18n="sharedInfoLivingCopy">
+                Un spațiu luminos cu canapea, zonă de dining și TV, potrivit pentru cafeaua de dimineață,
+                seri liniștite sau timp petrecut împreună.
+              </p>
+            </div>
             <span data-i18n="sharedLivingTag">relaxare · dining · TV</span>
           </figcaption>
         </figure>
@@ -4765,7 +4938,12 @@
           >
 
           <figcaption class="shared-photo-label">
-            <strong data-i18n="sharedKitchenTitle">Bucătăria</strong>
+            <div>
+              <strong data-i18n="sharedKitchenTitle">Bucătăria</strong>
+              <p class="shared-photo-mobile-copy" data-i18n="sharedInfoKitchenCopy">
+                Frigider, cuptor, cuptor cu microunde, cafetieră, fierbător și ustensile pentru un sejur mai flexibil.
+              </p>
+            </div>
             <span data-i18n="sharedKitchenTag">complet echipată</span>
           </figcaption>
         </figure>
@@ -4779,7 +4957,12 @@
           >
 
           <figcaption class="shared-photo-label">
-            <strong data-i18n="sharedTerraceTitle">Terasa</strong>
+            <div>
+              <strong data-i18n="sharedTerraceTitle">Terasa</strong>
+              <p class="shared-photo-mobile-copy" data-i18n="sharedInfoTerraceCopy">
+                Mobilier exterior și un colț relaxat unde poți începe ziua încet sau încheia seara după Brașov.
+              </p>
+            </div>
             <span data-i18n="sharedTerraceTag">aer liber · relaxare</span>
           </figcaption>
         </figure>
@@ -5335,6 +5518,15 @@
   </div>
 
 
+
+
+  <!-- =======================================================
+       PROPERTY IMAGE LIGHTBOX
+       ======================================================= -->
+  <div class="property-lightbox" id="propertyLightbox" aria-hidden="true">
+    <button class="property-lightbox-close" id="propertyLightboxClose" type="button" aria-label="Close image">×</button>
+    <img id="propertyLightboxImage" alt="">
+  </div>
 
   <!-- =======================================================
        FULLSCREEN MENU
@@ -6015,8 +6207,10 @@
         bookingSuite1: "Suita 1",
         bookingSuite2: "Suita 2",
         bookingSuiteSmall: "pentru 1–2 persoane",
+        bookingSuiteSmallMobile: "1–2 persoane",
         bookingEntire: "Întreaga reședință",
         bookingEntireSmall: "pentru 1–6 persoane",
+        bookingEntireSmallMobile: "1–6 persoane",
         bookingSendRequest: "Trimite cererea",
         bookingSummaryKicker: "Cererea ta",
         bookingSummaryTitle: "Direct, simplu și fără intermediar.",
@@ -6659,8 +6853,10 @@
         bookingSuite1: "Suite 1",
         bookingSuite2: "Suite 2",
         bookingSuiteSmall: "for 1–2 guests",
+        bookingSuiteSmallMobile: "1–2 guests",
         bookingEntire: "Entire residence",
         bookingEntireSmall: "for 1–6 guests",
+        bookingEntireSmallMobile: "1–6 guests",
         bookingSendRequest: "Send request",
         bookingSummaryKicker: "Your request",
         bookingSummaryTitle: "Direct, simple and without an intermediary.",
@@ -7303,8 +7499,10 @@
         bookingSuite1: "Suite 1",
         bookingSuite2: "Suite 2",
         bookingSuiteSmall: "für 1–2 Gäste",
+        bookingSuiteSmallMobile: "1–2 Gäste",
         bookingEntire: "Gesamte Unterkunft",
         bookingEntireSmall: "für 1–6 Gäste",
+        bookingEntireSmallMobile: "1–6 Gäste",
         bookingSendRequest: "Anfrage senden",
         bookingSummaryKicker: "Eure Anfrage",
         bookingSummaryTitle: "Direkt, einfach und ohne Vermittler.",
@@ -9455,6 +9653,51 @@
     bookingApplyGuestLogic();
     bookingUpdateSummary();
 
+
+
+
+    /* =========================================================
+       PROPERTY IMAGE LIGHTBOX
+       ========================================================= */
+
+    const propertyLightbox = document.getElementById("propertyLightbox");
+    const propertyLightboxImage = document.getElementById("propertyLightboxImage");
+    const propertyLightboxClose = document.getElementById("propertyLightboxClose");
+
+    function openPropertyLightbox(image) {
+      propertyLightboxImage.src = image.currentSrc || image.src;
+      propertyLightboxImage.alt = image.alt || "";
+      propertyLightbox.classList.add("open");
+      propertyLightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closePropertyLightbox() {
+      propertyLightbox.classList.remove("open");
+      propertyLightbox.setAttribute("aria-hidden", "true");
+      propertyLightboxImage.src = "";
+      document.body.style.overflow = "";
+    }
+
+    document
+      .querySelectorAll(".stay-card-image img, .shared-photo img")
+      .forEach(image => {
+        image.addEventListener("click", () => openPropertyLightbox(image));
+      });
+
+    propertyLightboxClose.addEventListener("click", closePropertyLightbox);
+
+    propertyLightbox.addEventListener("click", event => {
+      if (event.target === propertyLightbox) {
+        closePropertyLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && propertyLightbox.classList.contains("open")) {
+        closePropertyLightbox();
+      }
+    });
 
 
     document.addEventListener(
