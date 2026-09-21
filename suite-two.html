@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Suite 2 | Cucu Residence Brașov</title>
+  <meta name="description" content="Suita 2 la Cucu Residence Brașov — dormitor privat, lounge privat cu TV, baie proprie și acces la spațiile comune ale proprietății.">
+
+  <style>
+    :root {
+      --cream:#f5f1e8;
+      --white:#fff;
+      --forest:#173d31;
+      --forest-dark:#0d2921;
+      --accent:#5f7f83;
+      --gold:#c5a46d;
+      --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+      --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--sans); background:var(--cream); color:#18231e; }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; }
+
+    .hero {
+      min-height:92vh;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow:hidden;
+      color:#fff;
+      background:url("assets/images/suite-two/suite_two_bedroom_01.webp") center/cover no-repeat;
+      isolation:isolate;
+    }
+    .hero::before {
+      content:"";
+      position:absolute; inset:0; z-index:-1;
+      background:
+        linear-gradient(90deg,rgba(7,20,16,.78),rgba(7,20,16,.38) 48%,rgba(7,20,16,.12)),
+        linear-gradient(180deg,rgba(0,0,0,.24),transparent 45%,rgba(0,0,0,.45));
+    }
+
+    header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:max(24px,env(safe-area-inset-top)) clamp(20px,5vw,70px) 0;
+      position:relative; z-index:3;
+    }
+    .brand {
+      display:flex; flex-direction:column; gap:5px;
+    }
+    .brand strong {
+      font-family:var(--serif); font-size:clamp(26px,2.3vw,38px); font-weight:400;
+    }
+    .brand span {
+      font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.68);
+    }
+    .header-right { display:flex; gap:10px; align-items:center; }
+    .langs {
+      display:flex; padding:4px; border:1px solid rgba(255,255,255,.25);
+      border-radius:999px; background:rgba(255,255,255,.08); backdrop-filter:blur(12px);
+    }
+    .lang {
+      width:40px; height:36px; border:0; border-radius:999px;
+      background:transparent; color:#fff; cursor:pointer; font-size:11px; font-weight:700;
+    }
+    .lang.active { background:#fff; color:var(--forest-dark); }
+    .back {
+      min-height:44px; display:inline-flex; align-items:center; gap:8px;
+      padding:0 16px; border:1px solid rgba(255,255,255,.25); border-radius:999px;
+      background:rgba(255,255,255,.08); color:#fff; font-size:11px; font-weight:800;
+    }
+
+    .hero-copy {
+      flex:1; display:flex; align-items:flex-end;
+      padding:110px clamp(20px,5vw,70px) clamp(48px,7vw,84px);
+    }
+    .hero-inner { width:min(790px,100%); }
+    .eyebrow {
+      display:flex; align-items:center; gap:12px; margin-bottom:18px;
+      font-size:10px; letter-spacing:.21em; text-transform:uppercase; font-weight:800;
+      color:rgba(255,255,255,.78);
+    }
+    .eyebrow::before { content:""; width:38px; height:1px; background:currentColor; }
+    h1 {
+      max-width:800px; font-family:var(--serif);
+      font-size:clamp(64px,8vw,118px); font-weight:400; line-height:.86; letter-spacing:-.055em;
+    }
+    .hero-copy p {
+      max-width:650px; margin-top:22px; font-size:clamp(16px,1.45vw,20px);
+      line-height:1.65; color:rgba(255,255,255,.84);
+    }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+    .btn {
+      min-height:52px; display:inline-flex; align-items:center; justify-content:center;
+      padding:0 21px; border-radius:999px; font-size:12px; font-weight:800;
+    }
+    .btn-primary { background:#fff; color:var(--forest-dark); }
+    .btn-secondary { border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); }
+
+    .shell { width:min(1200px,calc(100% - 44px)); margin:0 auto; }
+    .section { padding:clamp(72px,8vw,112px) 0; }
+    .kicker {
+      color:#8a6545; font-size:9px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .section h2 {
+      font-family:var(--serif); font-size:clamp(42px,5vw,70px);
+      font-weight:400; line-height:.98; letter-spacing:-.04em; color:var(--forest-dark);
+    }
+    .lead {
+      max-width:720px; margin-top:18px; color:rgba(24,35,30,.68);
+      font-size:16px; line-height:1.72;
+    }
+
+    .facts {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:30px;
+    }
+    .fact {
+      padding:18px; border:1px solid rgba(23,61,49,.09); border-radius:18px; background:#fff;
+    }
+    .fact small {
+      display:block; margin-bottom:8px; font-size:9px; letter-spacing:.12em;
+      text-transform:uppercase; font-weight:800; color:#8a6545;
+    }
+    .fact strong { font-family:var(--serif); font-size:21px; font-weight:400; color:var(--forest-dark); }
+
+    .gallery {
+      display:grid; grid-template-columns:1.25fr .75fr; grid-template-rows:repeat(2,280px);
+      gap:14px; margin-top:36px;
+    }
+    .gallery-card {
+      position:relative; overflow:hidden; border-radius:24px; background:#ddd;
+    }
+    .gallery-card:first-child { grid-row:1/3; }
+    .gallery-card img { width:100%; height:100%; object-fit:cover; display:block; }
+    .gallery-card figcaption {
+      position:absolute; left:14px; bottom:14px;
+      padding:7px 10px; border-radius:999px; background:rgba(255,255,255,.9);
+      color:var(--forest-dark); font-size:9px; font-weight:800; text-transform:uppercase;
+      letter-spacing:.09em;
+    }
+
+    .private-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:36px;
+    }
+    .panel {
+      border-radius:24px; padding:clamp(24px,3vw,34px);
+    }
+    .panel-dark {
+      background:var(--forest-dark); color:#fff;
+    }
+    .panel-light {
+      background:#fff; border:1px solid rgba(23,61,49,.08);
+    }
+    .panel h3 {
+      font-family:var(--serif); font-size:clamp(30px,3vw,42px); font-weight:400; line-height:1.02;
+    }
+    .panel p {
+      margin-top:12px; font-size:13px; line-height:1.65;
+    }
+    .panel-dark p { color:rgba(255,255,255,.7); }
+    .panel-light p { color:rgba(24,35,30,.64); }
+
+    .feature-list { display:grid; gap:0; margin-top:18px; }
+    .feature {
+      display:flex; justify-content:space-between; gap:18px; padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .panel-light .feature { border-bottom-color:rgba(23,61,49,.10); }
+    .feature:last-child { border-bottom:0; }
+    .feature span { font-size:11px; opacity:.6; }
+    .feature strong { font-size:12px; text-align:right; }
+
+    .access {
+      margin-top:18px; padding:18px; border-radius:17px;
+      background:rgba(197,164,109,.10); font-size:12px; line-height:1.6;
+    }
+
+    .bottom-cta {
+      padding:clamp(62px,7vw,90px) 0;
+      background:linear-gradient(135deg,var(--forest-dark),#21483b);
+      color:#fff; text-align:center;
+    }
+    .bottom-cta h2 {
+      margin:auto; max-width:780px; color:#fff;
+      font-family:var(--serif); font-size:clamp(42px,5vw,68px); font-weight:400; line-height:.98;
+    }
+    .bottom-cta p {
+      max-width:620px; margin:16px auto 0; color:rgba(255,255,255,.68); line-height:1.6;
+    }
+    .bottom-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-top:24px; }
+
+    footer {
+      padding:24px 22px; text-align:center; font-size:10px; color:rgba(24,35,30,.48);
+    }
+
+    @media(max-width:850px) {
+      .facts { grid-template-columns:repeat(2,1fr); }
+      .private-grid { grid-template-columns:1fr; }
+      .gallery { grid-template-columns:1fr 1fr; grid-template-rows:auto auto; }
+      .gallery-card:first-child { grid-column:1/-1; grid-row:auto; aspect-ratio:16/9; }
+      .gallery-card:not(:first-child) { aspect-ratio:4/3; }
+    }
+
+    @media(max-width:620px) {
+      header { padding-left:18px; padding-right:18px; }
+      .back span:last-child { display:none; }
+      .hero { min-height:82vh; }
+      .hero-copy { padding-left:20px; padding-right:20px; }
+      h1 { font-size:clamp(58px,18vw,80px); }
+      .shell { width:calc(100% - 40px); }
+      .facts { grid-template-columns:1fr 1fr; }
+      .gallery {
+        display:flex; overflow-x:auto; gap:10px; scrollbar-width:none; scroll-snap-type:x mandatory;
+      }
+      .gallery::-webkit-scrollbar { display:none; }
+      .gallery-card,.gallery-card:first-child {
+        flex:0 0 82vw; min-height:390px; aspect-ratio:auto; scroll-snap-align:start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <header>
+      <a class="brand" href="index.html">
+        <strong>Cucu Residence</strong>
+        <span data-i18n="brandLocation">Brașov · România</span>
+      </a>
+
+      <div class="header-right">
+        <div class="langs">
+          <button class="lang active" data-lang="ro">RO</button>
+          <button class="lang" data-lang="en">EN</button>
+          <button class="lang" data-lang="de">DE</button>
+        </div>
+
+        <a class="back" href="index.html#stay">
+          <span>←</span>
+          <span data-i18n="backHome">Înapoi la cazare</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="hero-copy">
+      <div class="hero-inner">
+        <div class="eyebrow" data-i18n="heroEyebrow">SUITA 2 · CUCU RESIDENCE</div>
+        <h1 data-i18n="heroTitle">Confort cu personalitate, tot pentru doi.</h1>
+        <p data-i18n="heroIntro">O suită mansardată cu lemn, accente reci și atmosferă intimă — cu dormitor, lounge privat și baie proprie.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="index.html?stay=suite2#booking">
+            <span data-i18n="bookNow">Verifică disponibilitatea</span>
+            <span>→</span>
+          </a>
+          <a class="btn btn-secondary" href="#details">
+            <span data-i18n="seeDetails">Vezi detalii</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <main id="details">
+
+    <section class="section">
+      <div class="shell">
+        <div class="kicker" data-i18n="overviewKicker">SUITA 2</div>
+        <h2 data-i18n="overviewTitle">Aceeași intimitate, o atmosferă complet diferită.</h2>
+        <p class="lead" data-i18n="overviewLead">Suita 2 păstrează aceeași formulă practică: dormitor separat, lounge privat cu TV și baie proprie, într-un decor mai rustic și mai contrastant.</p>
+
+        <div class="facts">
+          <div class="fact">
+            <small data-i18n="factCapacityLabel">Capacitate</small>
+            <strong data-i18n="factCapacity">2 persoane</strong>
+          </div>
+          <div class="fact">
+            <small data-i18n="factBedroomLabel">Dormitor</small>
+            <strong data-i18n="factBedroom">Privat</strong>
+          </div>
+          <div class="fact">
+            <small data-i18n="factLoungeLabel">Lounge</small>
+            <strong data-i18n="factLounge">Privat · TV</strong>
+          </div>
+          <div class="fact">
+            <small data-i18n="factBathLabel">Baie</small>
+            <strong data-i18n="factBath">Privată · duș</strong>
+          </div>
+        </div>
+
+        <div class="gallery">
+
+    <figure class="gallery-card">
+      <img src="assets/images/suite-two/suite_two_bedroom_01.webp" alt="Suite 2 - Bedroom" loading="lazy">
+      <figcaption data-i18n="galleryBedroom1">Dormitor</figcaption>
+    </figure>
+
+
+    <figure class="gallery-card">
+      <img src="assets/images/suite-two/suite_two_lounge_01.webp" alt="Suite 2 - Private lounge" loading="lazy">
+      <figcaption data-i18n="galleryLounge">Lounge privat</figcaption>
+    </figure>
+
+
+    <figure class="gallery-card">
+      <img src="assets/images/suite-two/suite_two_bathroom_01.webp" alt="Suite 2 - Private bathroom" loading="lazy">
+      <figcaption data-i18n="galleryBath">Baie privată</figcaption>
+    </figure>
+
+
+    <figure class="gallery-card">
+      <img src="assets/images/suite-two/suite_two_bedroom_02.webp" alt="Suite 2 - Evening atmosphere" loading="lazy">
+      <figcaption data-i18n="galleryBedroom2">Atmosferă de seară</figcaption>
+    </figure>
+
+        </div>
+
+        <div class="private-grid">
+          <article class="panel panel-dark">
+            <div class="kicker" style="color:#d8b885" data-i18n="privateKicker">SPAȚIUL TĂU</div>
+            <h3 data-i18n="privateTitle">O suită separată, doar pentru voi.</h3>
+            <p data-i18n="privateText">Dormitorul, lounge-ul și baia sunt private, astfel încât zona ta de cazare rămâne complet separată.</p>
+
+            <div class="feature-list">
+              <div class="feature">
+                <span data-i18n="fCapacity">Capacitate</span>
+                <strong data-i18n="fCapacityValue">2 persoane</strong>
+              </div>
+              <div class="feature">
+                <span data-i18n="fMedia">Media</span>
+                <strong data-i18n="fMediaValue">TV cu ecran plat</strong>
+              </div>
+              <div class="feature">
+                <span data-i18n="fComfort">Confort</span>
+                <strong data-i18n="fComfortValue">WiFi · aer condiționat</strong>
+              </div>
+              <div class="feature">
+                <span data-i18n="fBathroom">Baie</span>
+                <strong data-i18n="fBathroomValue">Privată · duș</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel panel-light">
+            <div class="kicker" data-i18n="sharedKicker">SPAȚIILE COMUNE</div>
+            <h3 data-i18n="sharedTitle">Living, bucătărie și terasă la câțiva pași.</h3>
+            <p data-i18n="sharedText">Pe lângă spațiul privat, ai acces la toate zonele comune ale Cucu Residence.</p>
+
+            <div class="access" data-i18n="sharedNote">Dacă Suita 1 este rezervată separat, livingul principal, bucătăria și terasa sunt comune. Dormitorul, lounge-ul și baia Suitei 2 nu sunt împărțite niciodată.</div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <section class="bottom-cta">
+    <div class="shell">
+      <div class="kicker" style="color:#d8b885" data-i18n="ctaKicker">REZERVARE</div>
+      <h2 data-i18n="ctaTitle">Suita 2 te așteaptă în Brașov.</h2>
+      <p data-i18n="ctaText">Alege perioada și trimite cererea din formularul principal Cucu Residence.</p>
+
+      <div class="bottom-actions">
+        <a class="btn btn-primary" href="index.html?stay=suite2#booking">
+          <span data-i18n="bookNow">Verifică disponibilitatea</span>
+          <span>→</span>
+        </a>
+
+        <a class="btn btn-secondary" href="suite-one.html">
+          <span data-i18n="nextSuite">Vezi Suita 1</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Cucu Residence · Brașov
+  </footer>
+
+
+  <script>
+    const translations = {
+      ro: {
+    brandLocation: "Brașov · România",
+    backHome: "Înapoi la cazare",
+    bookNow: "Verifică disponibilitatea",
+    seeDetails: "Vezi detalii",
+    factCapacityLabel: "Capacitate",
+    factCapacity: "2 persoane",
+    factBedroomLabel: "Dormitor",
+    factBedroom: "Privat",
+    factLoungeLabel: "Lounge",
+    factLounge: "Privat · TV",
+    factBathLabel: "Baie",
+    factBath: "Privată · duș",
+    fCapacity: "Capacitate",
+    fCapacityValue: "2 persoane",
+    fMedia: "Media",
+    fMediaValue: "TV cu ecran plat",
+    fComfort: "Confort",
+    fComfortValue: "WiFi · aer condiționat",
+    fBathroom: "Baie",
+    fBathroomValue: "Privată · duș",
+    metaDescription: "Suita 2 la Cucu Residence Brașov — dormitor privat, lounge privat cu TV, baie proprie și acces la spațiile comune ale proprietății.",
+    heroEyebrow: "SUITA 2 · CUCU RESIDENCE",
+    heroTitle: "Confort cu personalitate, tot pentru doi.",
+    heroIntro: "O suită mansardată cu lemn, accente reci și atmosferă intimă — cu dormitor, lounge privat și baie proprie.",
+    overviewKicker: "SUITA 2",
+    overviewTitle: "Aceeași intimitate, o atmosferă complet diferită.",
+    overviewLead: "Suita 2 păstrează aceeași formulă practică: dormitor separat, lounge privat cu TV și baie proprie, într-un decor mai rustic și mai contrastant.",
+    privateKicker: "SPAȚIUL TĂU",
+    privateTitle: "O suită separată, doar pentru voi.",
+    privateText: "Dormitorul, lounge-ul și baia sunt private, astfel încât zona ta de cazare rămâne complet separată.",
+    sharedKicker: "SPAȚIILE COMUNE",
+    sharedTitle: "Living, bucătărie și terasă la câțiva pași.",
+    sharedText: "Pe lângă spațiul privat, ai acces la toate zonele comune ale Cucu Residence.",
+    sharedNote: "Dacă Suita 1 este rezervată separat, livingul principal, bucătăria și terasa sunt comune. Dormitorul, lounge-ul și baia Suitei 2 nu sunt împărțite niciodată.",
+    ctaKicker: "REZERVARE",
+    ctaTitle: "Suita 2 te așteaptă în Brașov.",
+    ctaText: "Alege perioada și trimite cererea din formularul principal Cucu Residence.",
+    nextSuite: "Vezi Suita 1",
+    galleryBedroom1: "Dormitor",
+    galleryLounge: "Lounge privat",
+    galleryBath: "Baie privată",
+    galleryBedroom2: "Atmosferă de seară"
+      },
+      en: {
+    brandLocation: "Brașov · Romania",
+    backHome: "Back to stays",
+    bookNow: "Check availability",
+    seeDetails: "See details",
+    factCapacityLabel: "Capacity",
+    factCapacity: "2 guests",
+    factBedroomLabel: "Bedroom",
+    factBedroom: "Private",
+    factLoungeLabel: "Lounge",
+    factLounge: "Private · TV",
+    factBathLabel: "Bathroom",
+    factBath: "Private · shower",
+    fCapacity: "Capacity",
+    fCapacityValue: "2 guests",
+    fMedia: "Media",
+    fMediaValue: "Flat-screen TV",
+    fComfort: "Comfort",
+    fComfortValue: "WiFi · air conditioning",
+    fBathroom: "Bathroom",
+    fBathroomValue: "Private · shower",
+    metaDescription: "Suite 2 at Cucu Residence Brașov — private bedroom, private TV lounge, private bathroom and access to the shared spaces of the property.",
+    heroEyebrow: "SUITE 2 · CUCU RESIDENCE",
+    heroTitle: "Comfort with character, still for two.",
+    heroIntro: "An attic suite with wood, cooler tones and a more intimate mood — with a private bedroom, lounge and bathroom.",
+    overviewKicker: "SUITE 2",
+    overviewTitle: "The same privacy, a completely different atmosphere.",
+    overviewLead: "Suite 2 keeps the same practical formula: separate bedroom, private TV lounge and private bathroom, in a more rustic and contrasting setting.",
+    privateKicker: "YOUR PRIVATE SPACE",
+    privateTitle: "A separate suite, just for you.",
+    privateText: "The bedroom, lounge and bathroom are private, so your accommodation remains completely separate.",
+    sharedKicker: "SHARED SPACES",
+    sharedTitle: "Living room, kitchen and terrace only a few steps away.",
+    sharedText: "In addition to your private suite, you have access to all common areas of Cucu Residence.",
+    sharedNote: "If Suite 1 is booked separately, the main living room, kitchen and terrace are shared. Your bedroom, lounge and bathroom are never shared.",
+    ctaKicker: "BOOKING",
+    ctaTitle: "Suite 2 is ready for your stay in Brașov.",
+    ctaText: "Choose your dates and send your request from the main Cucu Residence booking form.",
+    nextSuite: "See Suite 1",
+    galleryBedroom1: "Bedroom",
+    galleryLounge: "Private lounge",
+    galleryBath: "Private bathroom",
+    galleryBedroom2: "Evening atmosphere"
+      },
+      de: {
+    brandLocation: "Brașov · Rumänien",
+    backHome: "Zurück zur Unterkunft",
+    bookNow: "Verfügbarkeit prüfen",
+    seeDetails: "Details ansehen",
+    factCapacityLabel: "Kapazität",
+    factCapacity: "2 Gäste",
+    factBedroomLabel: "Schlafzimmer",
+    factBedroom: "Privat",
+    factLoungeLabel: "Lounge",
+    factLounge: "Privat · TV",
+    factBathLabel: "Bad",
+    factBath: "Privat · Dusche",
+    fCapacity: "Kapazität",
+    fCapacityValue: "2 Gäste",
+    fMedia: "Media",
+    fMediaValue: "Flachbild-TV",
+    fComfort: "Komfort",
+    fComfortValue: "WLAN · Klimaanlage",
+    fBathroom: "Bad",
+    fBathroomValue: "Privat · Dusche",
+    metaDescription: "Suite 2 in der Cucu Residence Brașov — privates Schlafzimmer, private TV-Lounge, eigenes Bad und Zugang zu den Gemeinschaftsbereichen.",
+    heroEyebrow: "SUITE 2 · CUCU RESIDENCE",
+    heroTitle: "Komfort mit Charakter, für zwei.",
+    heroIntro: "Eine Mansardensuite mit Holz, kühleren Tönen und privater Atmosphäre — mit Schlafzimmer, Lounge und eigenem Bad.",
+    overviewKicker: "SUITE 2",
+    overviewTitle: "Die gleiche Privatsphäre, eine ganz andere Atmosphäre.",
+    overviewLead: "Suite 2 bietet dieselbe praktische Aufteilung: separates Schlafzimmer, private TV-Lounge und eigenes Bad, in einem rustikaleren, kontrastreicheren Stil.",
+    privateKicker: "EUER PRIVATER BEREICH",
+    privateTitle: "Eine separate Suite nur für euch.",
+    privateText: "Schlafzimmer, Lounge und Bad sind privat, sodass euer Unterkunftsbereich vollständig getrennt bleibt.",
+    sharedKicker: "GEMEINSCHAFTSBEREICHE",
+    sharedTitle: "Wohnzimmer, Küche und Terrasse nur wenige Schritte entfernt.",
+    sharedText: "Zusätzlich zur privaten Suite stehen euch alle Gemeinschaftsbereiche der Cucu Residence zur Verfügung.",
+    sharedNote: "Wenn Suite 1 separat gebucht ist, werden Hauptwohnzimmer, Küche und Terrasse geteilt. Schlafzimmer, Lounge und Bad der Suite 2 werden niemals geteilt.",
+    ctaKicker: "BUCHUNG",
+    ctaTitle: "Suite 2 wartet auf euren Aufenthalt in Brașov.",
+    ctaText: "Wählt eure Reisedaten und sendet die Anfrage über das Hauptformular der Cucu Residence.",
+    nextSuite: "Suite 1 ansehen",
+    galleryBedroom1: "Schlafzimmer",
+    galleryLounge: "Private Lounge",
+    galleryBath: "Privates Bad",
+    galleryBedroom2: "Abendstimmung"
+      }
+    };
+
+    const buttons = document.querySelectorAll(".lang");
+
+    function applyLanguage(lang) {
+      document.documentElement.lang = lang;
+      localStorage.setItem("cucuResidenceLanguage", lang);
+
+      document.querySelectorAll("[data-i18n]").forEach(node => {
+        const key = node.dataset.i18n;
+        if (translations[lang]?.[key]) {
+          node.textContent = translations[lang][key];
+        }
+      });
+
+      buttons.forEach(button => {
+        button.classList.toggle("active", button.dataset.lang === lang);
+      });
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.lang));
+    });
+
+    const saved = localStorage.getItem("cucuResidenceLanguage");
+    applyLanguage(["ro","en","de"].includes(saved) ? saved : "ro");
+  </script>
+
+</body>
+</html>
