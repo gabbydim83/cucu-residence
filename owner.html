@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cucu Residence — Owner Dashboard</title>
+<style>
+:root{
+  --ink:#10243e;
+  --muted:#71808c;
+  --line:#dfe7ed;
+  --bg:#f4f7f8;
+  --white:#fff;
+  --gold:#c99a3d;
+  --blue:#2f6fae;
+  --blue-soft:#eaf2fb;
+  --red:#b74949;
+  --red-soft:#fbecec;
+  --green:#3e9b61;
+  --yellow:#d6a233;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#eef5f8,#fff);color:var(--ink)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+.login-card{width:min(430px,100%);padding:46px 40px;border-radius:24px;background:#fff;box-shadow:0 25px 70px rgba(8,45,80,.15);text-align:center}
+.login-logo,.dashboard-logo{display:grid;place-items:center;border:1px solid var(--gold);border-radius:50%;font-family:Georgia,serif;color:var(--gold)}
+.login-logo{width:74px;height:74px;margin:0 auto 20px;font-size:34px}
+.login-card h1{font:normal 34px Georgia,serif;color:#082d50}
+.login-card>p{margin:8px 0 28px;color:#7d8a94;font-size:12px}
+.field{display:grid;gap:6px;margin-top:12px;text-align:left}
+.field span{font-size:9px;font-weight:800;color:#637684;letter-spacing:.08em;text-transform:uppercase}
+.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #dce5eb;border-radius:9px;outline:0;background:#fff;color:#173853}
+.field textarea{min-height:88px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.login-button{width:100%;height:50px;margin-top:18px;border:0;border-radius:9px;background:#082d50;color:#fff;font-size:11px;font-weight:800}
+.login-error{display:none;margin-top:14px;padding:10px;border-radius:8px;background:#fdeaea;color:#a34747;font-size:11px}
+.login-note{margin-top:17px!important;font-size:9px!important;color:#99a4ad!important}
+.dashboard{display:none;min-height:100vh}
+.dashboard-header{height:78px;padding:0 30px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #e2e9ee}
+.dashboard-brand{display:flex;align-items:center;gap:12px}
+.dashboard-logo{width:44px;height:44px;font-size:20px}
+.dashboard-brand strong{display:block;font:normal 19px Georgia,serif;color:#082d50}
+.dashboard-brand span{display:block;margin-top:3px;color:#8996a1;font-size:8px;letter-spacing:1.4px}
+.header-actions{display:flex;align-items:center;gap:8px}
+.site-link,.logout-button{min-height:38px;padding:0 13px;border:1px solid #dce5eb;border-radius:8px;background:#fff;color:#173853;font-size:9px;font-weight:800}
+.dashboard-content{max-width:1450px;margin:auto;padding:38px 34px 55px}
+.welcome-row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.welcome-row small{display:block;margin-bottom:6px;color:var(--gold);font-size:9px;font-weight:800;letter-spacing:1.8px}
+.welcome-row h2{font:normal 36px Georgia,serif;color:#082d50}
+.welcome-row p{margin-top:7px;color:#758492;font-size:12px}
+.add-booking-button{min-height:43px;padding:0 17px;border:0;border-radius:9px;background:var(--gold);color:#fff;font-size:10px;font-weight:800}
+.property-switcher{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.property-button{position:relative;overflow:hidden;min-height:76px;padding:15px 18px;border:1px solid #dfe7ed;border-radius:15px;background:#fff;text-align:left;transition:.2s}
+.property-button::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--unit-color)}
+.property-button strong{display:block;font:normal 21px Georgia,serif;color:#163b5a}
+.property-button span{display:block;margin-top:5px;color:#7a8994;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.property-button.active{border-color:var(--unit-color);box-shadow:0 10px 30px rgba(8,45,80,.09);background:var(--unit-soft)}
+.property-button.blue{--unit-color:var(--blue);--unit-soft:var(--blue-soft)}
+.property-button.red{--unit-color:var(--red);--unit-soft:var(--red-soft)}
+.selected-unit{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:19px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.selected-unit span{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#778692}
+.selected-unit strong{font:normal 19px Georgia,serif;color:var(--selected-color,#082d50)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-card{padding:20px;border:1px solid #e1e8ed;border-radius:15px;background:#fff;box-shadow:0 8px 26px rgba(8,45,80,.05)}
+.stat-card span{display:block;margin-bottom:9px;color:#778692;font-size:10px;font-weight:700}
+.stat-card strong{font:normal 28px Georgia,serif;color:#082d50}
+.stat-card small{display:block;margin-top:6px;color:#96a2ab;font-size:9px}
+.main-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:18px}
+.card{padding:24px;border:1px solid #e1e8ed;border-radius:17px;background:#fff;box-shadow:0 10px 32px rgba(8,45,80,.05)}
+.card-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.card h3{font:normal 24px Georgia,serif;color:#082d50}
+.calendar-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:15px}
+.calendar-title{text-align:center}
+.calendar-title small{display:block;margin-bottom:4px;color:var(--selected-color,var(--gold));font-size:8px;font-weight:800;letter-spacing:1.5px}
+.calendar-title strong{font:normal 23px Georgia,serif;color:#082d50}
+.calendar-nav{width:39px;height:39px;border:1px solid #dfe7ed;border-radius:50%;background:#fff;color:#082d50;font-size:20px}
+.legend{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:15px;color:#74828e;font-size:9px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}.dot.available{background:#48a96c}.dot.confirmed{background:#df6868}.dot.pending{background:#d9a536}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day-name{padding:6px 2px;text-align:center;color:#98a4ae;font-size:8px;font-weight:800}
+.day{position:relative;min-height:69px;padding:8px;border:1px solid #e4eaee;border-radius:9px;background:#f8fafb;color:#31506a;transition:.18s}
+.day:not(.empty){cursor:pointer}
+.day:not(.empty):hover{transform:translateY(-1px);border-color:var(--selected-color,var(--gold))}
+.day.empty{visibility:hidden}
+.day.available{background:#edf8f1;color:#34774d}
+.day.confirmed{background:#faeaea;color:#a24848;border-color:#f0cece}
+.day.pending{background:#fff6dd;color:#956d13;border-color:#f0e0ae}
+.day.today{outline:2px solid var(--selected-color,var(--gold));outline-offset:-2px}
+.day-number{display:block;font-size:11px;font-weight:800}
+.day-status{display:block;margin-top:7px;font-size:7px;font-weight:800;line-height:1.25;overflow:hidden}
+.booking-list{display:grid;gap:9px;max-height:620px;overflow:auto}
+.booking-item{padding:13px;border:1px solid #e4ebef;border-radius:11px;background:#fafcfd;cursor:pointer}
+.booking-item strong{display:block;margin-bottom:4px;color:#173853;font-size:12px}
+.booking-item span{display:block;color:#788793;font-size:9px;line-height:1.55}
+.source-pill{display:inline-block!important;margin-top:7px;padding:4px 7px;border-radius:20px;background:#e7f7ee;color:#2a7d4b!important;font-size:7px!important;font-weight:800}
+.sync-section{margin-top:22px}
+.sync-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:15px}
+.sync-heading small{display:block;margin-bottom:6px;color:var(--gold);font-size:8px;font-weight:800;letter-spacing:1.6px}
+.sync-heading h3{font:normal 27px Georgia,serif;color:#082d50}
+.sync-heading p{max-width:760px;margin-top:5px;color:#748391;font-size:11px;line-height:1.55}
+.sync-actions{display:flex;gap:8px;flex-wrap:wrap}
+.sync-all{min-height:40px;padding:0 14px;border:0;border-radius:8px;background:var(--gold);color:#fff;font-size:8px;font-weight:800}
+.sync-both{background:#082d50}
+.sync-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sync-card{padding:20px;border:1px solid #e0e8ed;border-radius:15px;background:#fff}
+.provider-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.provider-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:#123f72;color:#fff;font:bold 19px Georgia,serif}
+.provider-icon.airbnb{background:#ff5a5f}
+.provider-head strong{display:block;margin-bottom:4px;color:#173853;font-size:13px}
+.status-pill{display:inline-flex;min-height:20px;align-items:center;padding:0 7px;border-radius:40px;background:#edf1f4;color:#71808c;font-size:6.5px;font-weight:800;letter-spacing:.6px}
+.status-pill.connected{background:#e5f7ed;color:#2c7c4e}
+.sync-card .field{margin-top:0}
+.sync-card-actions{display:flex;gap:7px;margin-top:10px}
+.sync-card-actions button{min-height:36px;padding:0 11px;border-radius:7px;font-size:8px;font-weight:800}
+.primary{border:0;background:#082d50;color:#fff}
+.secondary{border:1px solid #dfc5c5;background:#fff5f5;color:#9e4a4a}
+.sync-message{min-height:15px;margin-top:9px;color:#758492;font-size:8px;line-height:1.45}.sync-message.success{color:#2f7d50}.sync-message.error{color:#a54848}
+.sync-meta{margin-top:8px;padding-top:8px;border-top:1px solid #edf1f4;color:#8996a1;font-size:7px;line-height:1.5}.sync-meta.error{color:#a54848}
+.security-note{margin-top:12px;padding:12px 14px;border:1px solid #e1e8ed;border-radius:10px;background:#f7fafc;color:#6e7d89;font-size:9px;line-height:1.5}
+.modal{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}.modal-overlay{position:absolute;inset:0;background:rgba(3,24,43,.72);backdrop-filter:blur(7px)}
+.modal-card{position:relative;z-index:2;width:min(560px,100%);max-height:90vh;overflow:auto;padding:35px;border-radius:20px;background:#fff;box-shadow:0 28px 80px rgba(0,0,0,.28)}
+.modal-close{position:absolute;right:15px;top:15px;width:34px;height:34px;border:0;border-radius:50%;background:#f1f5f7;color:#526a7d;font-size:20px}
+.modal-card>small{display:block;margin-bottom:6px;color:var(--gold);font-size:8px;font-weight:800;letter-spacing:1.6px}
+.modal-card h2{margin-bottom:20px;font:normal 30px Georgia,serif;color:#082d50}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.modal-grid .full{grid-column:1/-1}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.modal-actions button{min-height:41px;padding:0 13px;border-radius:8px;font-size:9px;font-weight:800}
+.modal-save{flex:1;border:0;background:#082d50;color:#fff}
+.modal-cancel{border:1px solid #e0b05a;background:#fff8e9;color:#936919}
+.modal-delete{border:1px solid #e3b8b8;background:#fff2f2;color:#a54848}
+.modal-message{min-height:15px;margin-top:12px;text-align:center;color:#398058;font-size:9px;font-weight:700}
+@media(max-width:950px){.stats-grid{grid-template-columns:1fr 1fr}.main-grid{grid-template-columns:1fr}.sync-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.dashboard-header{padding:0 16px}.dashboard-content{padding:26px 16px 40px}.welcome-row,.sync-heading{align-items:stretch;flex-direction:column}.property-switcher{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.calendar-grid{gap:3px}.day{min-height:55px;padding:5px}.day-status{font-size:6px}.modal-card{padding:32px 19px 22px}.modal-grid{grid-template-columns:1fr}.modal-grid .full{grid-column:auto}.header-actions .site-link{display:none}}
+</style>
+</head>
+<body>
+
+<section class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">C</div>
+    <h1>Cucu Residence</h1>
+    <p>Owner Dashboard</p>
+    <label class="field"><span>Email</span><input type="email" id="username" autocomplete="email"></label>
+    <label class="field"><span>Password</span><input type="password" id="password" autocomplete="current-password"></label>
+    <button class="login-button" id="loginButton">SIGN IN</button>
+    <div class="login-error" id="loginError">Unable to sign in.</div>
+    <p class="login-note">Secure owner access for Cucu Residence.</p>
+  </div>
+</section>
+
+<div class="dashboard" id="dashboard">
+  <header class="dashboard-header">
+    <div class="dashboard-brand">
+      <div class="dashboard-logo">C</div>
+      <div><strong>Cucu Residence</strong><span>OWNER DASHBOARD</span></div>
+    </div>
+    <div class="header-actions">
+      <a class="site-link" href="index.html" target="_blank">OPEN WEBSITE ↗</a>
+      <button class="logout-button" id="logoutButton">LOG OUT</button>
+    </div>
+  </header>
+
+  <main class="dashboard-content">
+    <div class="welcome-row">
+      <div>
+        <small>PROPERTY MANAGEMENT</small>
+        <h2>Two suites. Two calendars.</h2>
+        <p>Manage Suite 1 · Blue and Suite 2 · Red independently.</p>
+      </div>
+      <button class="add-booking-button" id="addBookingButton">+ ADD BOOKING</button>
+    </div>
+
+    <div class="property-switcher">
+      <button class="property-button blue active" data-property-slug="cucu-suite-one">
+        <strong>Suite 1 · Blue</strong><span>Calendar 1</span>
+      </button>
+      <button class="property-button red" data-property-slug="cucu-suite-two">
+        <strong>Suite 2 · Red</strong><span>Calendar 2</span>
+      </button>
+    </div>
+
+    <div class="selected-unit" id="selectedUnit">
+      <span>Selected calendar</span><strong id="selectedUnitName">Suite 1 · Blue</strong>
+    </div>
+
+    <section class="stats-grid">
+      <div class="stat-card"><span>Upcoming bookings</span><strong id="statUpcoming">0</strong><small>Selected suite</small></div>
+      <div class="stat-card"><span>Nights booked</span><strong id="statNights">0</strong><small>Current month</small></div>
+      <div class="stat-card"><span>Guests arriving</span><strong id="statGuests">0</strong><small>Upcoming stays</small></div>
+      <div class="stat-card"><span>Connected channels</span><strong id="statChannels">0/2</strong><small>Booking.com + Airbnb</small></div>
+    </section>
+
+    <section class="main-grid">
+      <div class="card">
+        <div class="card-title-row"><h3>Reservation Calendar</h3></div>
+        <div class="calendar-top">
+          <button class="calendar-nav" id="ownerPrevMonth">‹</button>
+          <div class="calendar-title"><small>AVAILABILITY</small><strong id="ownerCalendarMonth">—</strong></div>
+          <button class="calendar-nav" id="ownerNextMonth">›</button>
+        </div>
+        <div class="legend">
+          <span><i class="dot available"></i>Available</span>
+          <span><i class="dot confirmed"></i>Confirmed</span>
+          <span><i class="dot pending"></i>Pending</span>
+        </div>
+        <div class="calendar-grid" id="ownerCalendar"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title-row"><h3>Upcoming Reservations</h3></div>
+        <div class="booking-list" id="bookingList"></div>
+      </div>
+    </section>
+
+    <section class="sync-section">
+      <div class="sync-heading">
+        <div>
+          <small>CHANNEL CALENDARS</small>
+          <h3>Calendar Sync</h3>
+          <p>Each suite has its own Booking.com and Airbnb iCal feeds. Connections shown below always belong to the selected suite.</p>
+        </div>
+        <div class="sync-actions">
+          <button class="sync-all" id="syncSelectedButton">↻ SYNC SELECTED SUITE</button>
+          <button class="sync-all sync-both" id="syncBothButton">↻ SYNC BOTH SUITES</button>
+        </div>
+      </div>
+
+      <div class="sync-grid">
+        <article class="sync-card">
+          <div class="provider-head">
+            <div class="provider-icon">B</div>
+            <div><strong>Booking.com</strong><span class="status-pill" id="bookingSyncStatus">NOT CONNECTED</span></div>
+          </div>
+          <label class="field"><span>PRIVATE ICAL URL</span><input type="password" id="bookingIcalUrl" placeholder="Paste Booking.com iCal export URL" autocomplete="off"></label>
+          <div class="sync-card-actions">
+            <button class="primary" id="saveBookingFeedButton">CONNECT</button>
+            <button class="secondary" id="removeBookingFeedButton" style="display:none">REMOVE</button>
+          </div>
+          <p class="sync-message" id="bookingSyncMessage"></p>
+          <div class="sync-meta" id="bookingSyncMeta">Last sync: Never</div>
+        </article>
+
+        <article class="sync-card">
+          <div class="provider-head">
+            <div class="provider-icon airbnb">A</div>
+            <div><strong>Airbnb</strong><span class="status-pill" id="airbnbSyncStatus">NOT CONNECTED</span></div>
+          </div>
+          <label class="field"><span>PRIVATE ICAL URL</span><input type="password" id="airbnbIcalUrl" placeholder="Paste Airbnb iCal export URL" autocomplete="off"></label>
+          <div class="sync-card-actions">
+            <button class="primary" id="saveAirbnbFeedButton">CONNECT</button>
+            <button class="secondary" id="removeAirbnbFeedButton" style="display:none">REMOVE</button>
+          </div>
+          <p class="sync-message" id="airbnbSyncMessage"></p>
+          <div class="sync-meta" id="airbnbSyncMeta">Last sync: Never</div>
+        </article>
+      </div>
+
+      <div class="security-note">🔒 Private iCal URLs are visible only inside the authenticated owner dashboard. Imported reservations are managed on their source platform.</div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="bookingModal">
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal-card">
+    <button class="modal-close" id="bookingModalClose">×</button>
+    <small>RESERVATION DETAILS</small>
+    <h2 id="modalTitle">Manage Booking</h2>
+    <div class="modal-grid">
+      <label class="field full"><span>Guest name</span><input id="modalGuest"></label>
+      <label class="field"><span>Check-in</span><input type="date" id="modalCheckIn"></label>
+      <label class="field"><span>Check-out</span><input type="date" id="modalCheckOut"></label>
+      <label class="field"><span>Guests</span><input type="number" id="modalGuests" min="1" max="2" value="2"></label>
+      <label class="field"><span>Status</span><select id="modalStatus"><option value="confirmed">Confirmed</option><option value="pending">Pending</option></select></label>
+      <label class="field full"><span>Amount €</span><input type="number" id="modalAmount" min="0" step="0.01" placeholder="0.00"></label>
+      <label class="field full"><span>Notes</span><textarea id="modalNotes" placeholder="Private notes..."></textarea></label>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-save" id="saveBookingButton">SAVE CHANGES</button>
+      <button class="modal-cancel" id="cancelBookingButton">CANCEL BOOKING</button>
+      <button class="modal-delete" id="deleteBookingButton">DELETE</button>
+    </div>
+    <p class="modal-message" id="modalMessage"></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://cimdefypgbkfizyykhkm.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_Ps8bDeuKhgf2NY4lNdGoOA_fQP15uAD";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+
+const OWNER_ACCOUNT_SLUG="cucu-residence";
+const PROPERTY_CONFIG={
+  "cucu-suite-one":{label:"Suite 1 · Blue",color:"#2f6fae",soft:"#eaf2fb"},
+  "cucu-suite-two":{label:"Suite 2 · Red",color:"#b74949",soft:"#fbecec"}
+};
+
+let ownerAccount=null;
+let ownerProperties=[];
+let ownerProperty=null;
+let ownerReservations=[];
+let ownerCalendarFeeds=[];
+let ownerCalendarDate=new Date();
+let selectedReservation=null;
+let bookingMode="new";
+
+const $=id=>document.getElementById(id);
+const loginScreen=$("loginScreen"),dashboard=$("dashboard"),loginButton=$("loginButton"),logoutButton=$("logoutButton"),usernameInput=$("username"),passwordInput=$("password"),loginError=$("loginError");
+const ownerCalendar=$("ownerCalendar"),ownerCalendarMonth=$("ownerCalendarMonth"),bookingList=$("bookingList");
+const bookingIcalUrl=$("bookingIcalUrl"),airbnbIcalUrl=$("airbnbIcalUrl"),bookingSyncStatus=$("bookingSyncStatus"),airbnbSyncStatus=$("airbnbSyncStatus"),bookingSyncMessage=$("bookingSyncMessage"),airbnbSyncMessage=$("airbnbSyncMessage"),bookingSyncMeta=$("bookingSyncMeta"),airbnbSyncMeta=$("airbnbSyncMeta");
+
+function showLoginError(message){loginError.textContent=message||"Unable to sign in.";loginError.style.display="block"}
+function hideLoginError(){loginError.style.display="none"}
+function showLogin(){dashboard.style.display="none";loginScreen.style.display="flex"}
+function showDashboard(){hideLoginError();loginScreen.style.display="none";dashboard.style.display="block"}
+
+async function userHasAccess(){
+  const {
+    data: userData,
+    error: userError
+  } = await supabaseClient.auth.getUser();
+
+  if(userError || !userData?.user){
+    console.error("Could not load authenticated user.", userError);
+    return false;
+  }
+
+  const {
+    data: account,
+    error: accountError
+  } = await supabaseClient
+    .from("accounts")
+    .select("id, name, slug")
+    .eq("slug", OWNER_ACCOUNT_SLUG)
+    .maybeSingle();
+
+  if(accountError || !account){
+    console.error("Could not load Cucu Residence account.", accountError);
+    return false;
+  }
+
+  const {
+    data: membership,
+    error: membershipError
+  } = await supabaseClient
+    .from("account_members")
+    .select("role, access_all_properties")
+    .eq("account_id", account.id)
+    .eq("user_id", userData.user.id)
+    .maybeSingle();
+
+  if(membershipError || !membership){
+    console.error("This user is not linked to Cucu Residence.", membershipError);
+    return false;
+  }
+
+  return (
+    membership.role === "owner" &&
+    membership.access_all_properties === true
+  );
+}
+
+async function login(){
+  const email=usernameInput.value.trim().toLowerCase(),password=passwordInput.value;
+  if(!email||!password){showLoginError("Please enter your email and password.");return}
+  loginButton.disabled=true;loginButton.textContent="SIGNING IN...";hideLoginError();
+  try{
+    const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+    if(error||!data?.session)throw(error||new Error("No session returned."));
+    if(!(await userHasAccess())){await supabaseClient.auth.signOut();throw new Error("This account does not have access to Cucu Residence.")}
+    await initializeDashboard();
+  }catch(error){console.error(error);showLoginError(error?.message||"Unable to sign in.");showLogin()}
+  finally{loginButton.disabled=false;loginButton.textContent="SIGN IN"}
+}
+
+async function restoreSession(){
+  const {data,error}=await supabaseClient.auth.getSession();
+  if(error||!data?.session){showLogin();return}
+  if(await userHasAccess())await initializeDashboard();else{await supabaseClient.auth.signOut();showLogin()}
+}
+
+async function loadProperties(){
+  const {data:account,error:aerr}=await supabaseClient.from("accounts").select("id,name,slug").eq("slug",OWNER_ACCOUNT_SLUG).maybeSingle();
+  if(aerr||!account)throw(aerr||new Error("Cucu Residence account not found."));
+  ownerAccount=account;
+  const slugs=Object.keys(PROPERTY_CONFIG);
+  const {data,error}=await supabaseClient.from("properties").select("id,account_id,name,slug,max_guests").eq("account_id",account.id).in("slug",slugs).eq("active",true);
+  if(error)throw error;
+  ownerProperties=data||[];
+  const missing=slugs.filter(slug=>!ownerProperties.some(p=>p.slug===slug));
+  if(missing.length)throw new Error("Missing Supabase properties: "+missing.join(", "));
+  ownerProperty=ownerProperties.find(p=>p.slug==="cucu-suite-one")||ownerProperties[0];
+}
+
+function config(){return PROPERTY_CONFIG[ownerProperty?.slug]||{label:"Suite",color:"#c99a3d",soft:"#f7f2e6"}}
+function applyUnitTheme(){
+  const cfg=config();
+  document.documentElement.style.setProperty("--selected-color",cfg.color);
+  $("selectedUnitName").textContent=cfg.label;
+  document.querySelectorAll(".property-button").forEach(btn=>btn.classList.toggle("active",btn.dataset.propertySlug===ownerProperty?.slug));
+}
+
+async function loadReservations(){
+  const {data,error}=await supabaseClient.from("calendar_entries").select(`
+    id,check_in,check_out,status,source,
+    reservation_details(guest_name,guests,amount,currency,notes)
+  `).eq("property_id",ownerProperty.id).eq("entry_type","reservation").order("check_in",{ascending:true});
+  if(error)throw error;
+  ownerReservations=(data||[]).map(row=>{
+    const d=Array.isArray(row.reservation_details)?(row.reservation_details[0]||null):(row.reservation_details||null);
+    return {id:row.id,guest:d?.guest_name||(row.source==="manual"||row.source==="direct"?"Reservation":"External reservation"),checkIn:row.check_in,checkOut:row.check_out,guests:Number(d?.guests||1),amount:Number(d?.amount||0),currency:d?.currency||"EUR",notes:d?.notes||"",status:row.status,source:row.source};
+  });
+}
+
+async function loadFeeds(){
+  const {data,error}=await supabaseClient.from("property_calendar_feeds").select("id,account_id,property_id,provider,name,feed_url,enabled,last_synced_at,last_sync_status,last_error").eq("property_id",ownerProperty.id).in("provider",["booking_com","airbnb"]);
+  if(error)throw error;
+  ownerCalendarFeeds=data||[];
+  updateFeedUi("booking_com");updateFeedUi("airbnb");renderStats();
+}
+
+function getFeed(provider){return ownerCalendarFeeds.find(f=>f.provider===provider)||null}
+function formatSync(value){if(!value)return"Never";const d=new Date(value);return Number.isNaN(d.getTime())?"Unknown":new Intl.DateTimeFormat("en-GB",{dateStyle:"medium",timeStyle:"short"}).format(d)}
+function feedElements(provider){
+  const booking=provider==="booking_com";
+  return {
+    input:booking?bookingIcalUrl:airbnbIcalUrl,
+    status:booking?bookingSyncStatus:airbnbSyncStatus,
+    message:booking?bookingSyncMessage:airbnbSyncMessage,
+    meta:booking?bookingSyncMeta:airbnbSyncMeta,
+    save:booking?$("saveBookingFeedButton"):$("saveAirbnbFeedButton"),
+    remove:booking?$("removeBookingFeedButton"):$("removeAirbnbFeedButton")
+  };
+}
+function updateFeedUi(provider){
+  const feed=getFeed(provider),el=feedElements(provider);
+  el.message.textContent="";el.message.className="sync-message";
+  if(feed&&feed.enabled!==false){
+    el.input.value=feed.feed_url||"";el.status.textContent="CONNECTED";el.status.classList.add("connected");el.save.textContent="UPDATE";el.remove.style.display="";
+    el.meta.className="sync-meta"+(feed.last_sync_status==="error"?" error":"");
+    el.meta.textContent="Last sync: "+formatSync(feed.last_synced_at)+(feed.last_sync_status==="success"?" · Success":feed.last_sync_status==="error"?" · Error: "+(feed.last_error||"Unknown"):"");
+  }else{
+    el.input.value="";el.status.textContent="NOT CONNECTED";el.status.classList.remove("connected");el.save.textContent="CONNECT";el.remove.style.display="none";el.meta.className="sync-meta";el.meta.textContent="Last sync: Never";
+  }
+}
+
+async function saveFeed(provider){
+  const el=feedElements(provider),url=el.input.value.trim();
+  el.message.textContent="";el.message.className="sync-message";
+  if(!url){el.message.textContent="Paste the private iCal export URL first.";el.message.classList.add("error");return}
+  try{new URL(url)}catch{el.message.textContent="Please enter a valid iCal URL.";el.message.classList.add("error");return}
+  el.save.disabled=true;el.remove.disabled=true;
+  try{
+    const existing=getFeed(provider);
+    const payload={feed_url:url,enabled:true,name:provider==="booking_com"?"Booking.com iCal":"Airbnb iCal"};
+    let result;
+    if(existing){
+      result=await supabaseClient.from("property_calendar_feeds").update(payload).eq("id",existing.id).eq("property_id",ownerProperty.id).select("id,account_id,property_id,provider,name,feed_url,enabled,last_synced_at,last_sync_status,last_error").single();
+    }else{
+      result=await supabaseClient.from("property_calendar_feeds").insert({...payload,account_id:ownerProperty.account_id,property_id:ownerProperty.id,provider}).select("id,account_id,property_id,provider,name,feed_url,enabled,last_synced_at,last_sync_status,last_error").single();
+    }
+    if(result.error)throw result.error;
+    ownerCalendarFeeds=ownerCalendarFeeds.filter(f=>f.provider!==provider);ownerCalendarFeeds.push(result.data);updateFeedUi(provider);
+    el.message.textContent="Calendar feed saved securely.";el.message.classList.add("success");
+  }catch(error){console.error(error);el.message.textContent=error?.message||"Could not save feed.";el.message.classList.add("error")}
+  finally{el.save.disabled=false;el.remove.disabled=false;renderStats()}
+}
+
+async function removeFeed(provider){
+  const existing=getFeed(provider);if(!existing)return;
+  if(!confirm("Remove this calendar connection from "+config().label+"?"))return;
+  const el=feedElements(provider);el.save.disabled=true;el.remove.disabled=true;
+  try{
+    const {error}=await supabaseClient.from("property_calendar_feeds").delete().eq("id",existing.id).eq("property_id",ownerProperty.id);
+    if(error)throw error;
+    ownerCalendarFeeds=ownerCalendarFeeds.filter(f=>f.provider!==provider);updateFeedUi(provider);el.message.textContent="Calendar connection removed.";el.message.className="sync-message success";
+  }catch(error){el.message.textContent=error?.message||"Could not remove feed.";el.message.className="sync-message error"}
+  finally{el.save.disabled=false;el.remove.disabled=false;renderStats()}
+}
+
+async function syncProperty(property){
+  const {data,error}=await supabaseClient.functions.invoke("sync-ical-calendar",{body:{property_id:property.id}});
+  if(error)throw error;
+  return data;
+}
+async function syncSelected(){
+  $("syncSelectedButton").disabled=true;$("syncSelectedButton").textContent="SYNCING...";
+  try{await syncProperty(ownerProperty);await loadFeeds();await refreshReservations()}
+  catch(error){alert(error?.message||"Calendar sync failed.")}
+  finally{$("syncSelectedButton").disabled=false;$("syncSelectedButton").textContent="↻ SYNC SELECTED SUITE"}
+}
+async function syncBoth(){
+  $("syncBothButton").disabled=true;$("syncBothButton").textContent="SYNCING BOTH...";
+  try{
+    for(const property of ownerProperties){await syncProperty(property)}
+    await loadFeeds();await refreshReservations();
+  }catch(error){alert(error?.message||"Calendar sync failed.")}
+  finally{$("syncBothButton").disabled=false;$("syncBothButton").textContent="↻ SYNC BOTH SUITES"}
+}
+
+function dateKey(y,m,d){return y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0")}
+function parseDate(v){const p=String(v).split("-").map(Number);return new Date(p[0],p[1]-1,p[2])}
+function dayInfo(key){
+  const current=parseDate(key);
+  for(const r of ownerReservations){
+    if(r.status==="cancelled")continue;
+    const cin=parseDate(r.checkIn),cout=parseDate(r.checkOut);
+    if(current>=cin&&current<cout)return{status:r.status,label:r.guest,reservation:r};
+  }
+  return{status:"available",label:"Available",reservation:null};
+}
+function renderCalendar(){
+  ownerCalendar.innerHTML="";
+  const y=ownerCalendarDate.getFullYear(),m=ownerCalendarDate.getMonth();
+  ownerCalendarMonth.textContent=new Intl.DateTimeFormat("en",{month:"long",year:"numeric"}).format(ownerCalendarDate);
+  ["MON","TUE","WED","THU","FRI","SAT","SUN"].forEach(n=>{const e=document.createElement("div");e.className="day-name";e.textContent=n;ownerCalendar.appendChild(e)});
+  let offset=(new Date(y,m,1).getDay()+6)%7;
+  for(let i=0;i<offset;i++){const e=document.createElement("div");e.className="day empty";ownerCalendar.appendChild(e)}
+  const today=new Date();today.setHours(0,0,0,0);
+  const total=new Date(y,m+1,0).getDate();
+  for(let d=1;d<=total;d++){
+    const key=dateKey(y,m,d),info=dayInfo(key),e=document.createElement("div");e.className="day "+info.status;
+    const dt=new Date(y,m,d);if(dt.getTime()===today.getTime())e.classList.add("today");
+    e.innerHTML=`<span class="day-number">${d}</span><span class="day-status">${escapeHtml(info.label)}</span>`;
+    e.addEventListener("click",()=>info.reservation?openEdit(info.reservation):openNew(key));
+    ownerCalendar.appendChild(e);
+  }
+}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function renderBookings(){
+  bookingList.innerHTML="";
+  const today=dateKey(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
+  const rows=ownerReservations.filter(r=>r.status!=="cancelled"&&r.checkOut>=today).sort((a,b)=>a.checkIn.localeCompare(b.checkIn));
+  if(!rows.length){bookingList.innerHTML="<div class='booking-item'><strong>No upcoming reservations</strong><span>New reservations will appear here.</span></div>";return}
+  rows.forEach(r=>{
+    const item=document.createElement("div");item.className="booking-item";
+    item.innerHTML=`<strong>${escapeHtml(r.guest)}</strong><span>${r.checkIn} — ${r.checkOut}</span><span>${r.guests} guest${r.guests===1?"":"s"}</span><span class="source-pill">${escapeHtml(String(r.source||"manual").toUpperCase())}</span>`;
+    item.addEventListener("click",()=>openEdit(r));bookingList.appendChild(item);
+  });
+}
+function nightsInMonth(r,y,m){
+  const start=new Date(y,m,1),end=new Date(y,m+1,1),cin=parseDate(r.checkIn),cout=parseDate(r.checkOut);
+  const a=cin>start?cin:start,b=cout<end?cout:end;return b>a?Math.round((b-a)/86400000):0;
+}
+function renderStats(){
+  const today=dateKey(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
+  const active=ownerReservations.filter(r=>r.status!=="cancelled");
+  const upcoming=active.filter(r=>r.checkOut>=today);
+  $("statUpcoming").textContent=upcoming.length;
+  $("statGuests").textContent=upcoming.reduce((s,r)=>s+Number(r.guests||0),0);
+  const now=new Date();$("statNights").textContent=active.reduce((s,r)=>s+nightsInMonth(r,now.getFullYear(),now.getMonth()),0);
+  $("statChannels").textContent=ownerCalendarFeeds.filter(f=>f.enabled!==false).length+"/2";
+}
+async function refreshReservations(){await loadReservations();renderCalendar();renderBookings();renderStats()}
+
+async function selectProperty(slug){
+  const found=ownerProperties.find(p=>p.slug===slug);if(!found)return;
+  ownerProperty=found;applyUnitTheme();bookingSyncMessage.textContent="";airbnbSyncMessage.textContent="";
+  await Promise.all([refreshReservations(),loadFeeds()]);
+}
+
+function addDays(key,days){const d=parseDate(key);d.setDate(d.getDate()+days);return dateKey(d.getFullYear(),d.getMonth(),d.getDate())}
+function setModalReadonly(readonly){
+  ["modalGuest","modalCheckIn","modalCheckOut","modalGuests","modalStatus","modalAmount","modalNotes"].forEach(id=>$(id).disabled=readonly);
+  $("saveBookingButton").style.display=readonly?"none":"";
+  $("cancelBookingButton").style.display=readonly?"none":"";
+  $("deleteBookingButton").style.display=readonly?"none":"";
+}
+function openNew(checkIn=""){
+  bookingMode="new";selectedReservation=null;setModalReadonly(false);
+  $("modalTitle").textContent="Add booking · "+config().label;
+  $("modalGuest").value="";$("modalCheckIn").value=checkIn;$("modalCheckOut").value=checkIn?addDays(checkIn,1):"";$("modalGuests").value=2;$("modalStatus").value="confirmed";$("modalAmount").value="";$("modalNotes").value="";$("modalMessage").textContent="";
+  $("cancelBookingButton").style.display="none";$("deleteBookingButton").style.display="none";$("bookingModal").classList.add("open");
+}
+function openEdit(r){
+  bookingMode="edit";selectedReservation=r;
+  const imported=!["manual","direct"].includes(r.source);
+  setModalReadonly(imported);
+  $("modalTitle").textContent=(imported?"Imported reservation":"Manage booking")+" · "+config().label;
+  $("modalGuest").value=r.guest;$("modalCheckIn").value=r.checkIn;$("modalCheckOut").value=r.checkOut;$("modalGuests").value=r.guests;$("modalStatus").value=r.status==="pending"?"pending":"confirmed";$("modalAmount").value=r.amount||"";$("modalNotes").value=r.notes||"";
+  $("modalMessage").textContent=imported?"Imported reservations must be managed on the source platform.":"";
+  if(!imported){$("cancelBookingButton").style.display="";$("deleteBookingButton").style.display=""}
+  $("bookingModal").classList.add("open");
+}
+function closeModal(){$("bookingModal").classList.remove("open");selectedReservation=null}
+
+async function saveReservation(){
+  const guest=$("modalGuest").value.trim(),checkIn=$("modalCheckIn").value,checkOut=$("modalCheckOut").value,guests=Number($("modalGuests").value||1);
+  if(!guest||!checkIn||!checkOut){$("modalMessage").textContent="Please complete the required fields.";return}
+  if(checkOut<=checkIn){$("modalMessage").textContent="Check-out must be after check-in.";return}
+  try{
+    $("saveBookingButton").disabled=true;$("saveBookingButton").textContent="SAVING...";
+    const {error}=await supabaseClient.rpc("owner_save_reservation",{p_property_id:ownerProperty.id,p_entry_id:bookingMode==="new"?null:selectedReservation?.id||null,p_check_in:checkIn,p_check_out:checkOut,p_status:$("modalStatus").value,p_guest_name:guest,p_guests:guests,p_amount:Number($("modalAmount").value)||0,p_currency:"EUR",p_notes:$("modalNotes").value.trim()});
+    if(error)throw error;await refreshReservations();closeModal();
+  }catch(error){$("modalMessage").textContent=error?.message||"Could not save reservation."}
+  finally{$("saveBookingButton").disabled=false;$("saveBookingButton").textContent="SAVE CHANGES"}
+}
+async function cancelReservation(){
+  if(!selectedReservation)return;if(!confirm("Cancel this booking and free the dates?"))return;
+  const {error}=await supabaseClient.from("calendar_entries").update({status:"cancelled"}).eq("id",selectedReservation.id).eq("property_id",ownerProperty.id);
+  if(error){$("modalMessage").textContent=error.message;return}await refreshReservations();closeModal();
+}
+async function deleteReservation(){
+  if(!selectedReservation)return;if(!confirm("Permanently delete this reservation?"))return;
+  const {error}=await supabaseClient.from("calendar_entries").delete().eq("id",selectedReservation.id).eq("property_id",ownerProperty.id);
+  if(error){$("modalMessage").textContent=error.message;return}await refreshReservations();closeModal();
+}
+
+async function initializeDashboard(){
+  try{
+    await loadProperties();applyUnitTheme();await Promise.all([refreshReservations(),loadFeeds()]);showDashboard();
+  }catch(error){console.error(error);showLoginError(error?.message||"Could not load Cucu Residence.");showLogin()}
+}
+
+loginButton.addEventListener("click",login);
+passwordInput.addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+usernameInput.addEventListener("keydown",e=>{if(e.key==="Enter")passwordInput.focus()});
+logoutButton.addEventListener("click",async()=>{await supabaseClient.auth.signOut();showLogin()});
+document.querySelectorAll(".property-button").forEach(btn=>btn.addEventListener("click",()=>selectProperty(btn.dataset.propertySlug)));
+$("ownerPrevMonth").addEventListener("click",()=>{ownerCalendarDate.setMonth(ownerCalendarDate.getMonth()-1);renderCalendar()});
+$("ownerNextMonth").addEventListener("click",()=>{ownerCalendarDate.setMonth(ownerCalendarDate.getMonth()+1);renderCalendar()});
+$("addBookingButton").addEventListener("click",()=>openNew());
+$("bookingModalClose").addEventListener("click",closeModal);$("modalOverlay").addEventListener("click",closeModal);
+$("saveBookingButton").addEventListener("click",saveReservation);$("cancelBookingButton").addEventListener("click",cancelReservation);$("deleteBookingButton").addEventListener("click",deleteReservation);
+$("saveBookingFeedButton").addEventListener("click",()=>saveFeed("booking_com"));$("saveAirbnbFeedButton").addEventListener("click",()=>saveFeed("airbnb"));
+$("removeBookingFeedButton").addEventListener("click",()=>removeFeed("booking_com"));$("removeAirbnbFeedButton").addEventListener("click",()=>removeFeed("airbnb"));
+$("syncSelectedButton").addEventListener("click",syncSelected);$("syncBothButton").addEventListener("click",syncBoth);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+restoreSession();
+</script>
+</body>
+</html>

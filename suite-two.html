@@ -220,6 +220,209 @@
         flex:0 0 82vw; min-height:390px; aspect-ratio:auto; scroll-snap-align:start;
       }
     }
+  
+    /* =========================================================
+       LIVE AVAILABILITY — Suite 2 · Red
+       ========================================================= */
+
+    .availability-section {
+      padding: clamp(66px, 7vw, 96px) 0;
+      background: #fffdf9;
+      border-top: 1px solid rgba(23,61,49,.08);
+    }
+
+    .availability-head {
+      display: grid;
+      grid-template-columns: minmax(0,.9fr) minmax(290px,.52fr);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .availability-title {
+      margin-top: 8px;
+      font-family: var(--serif);
+      font-size: clamp(38px,4.7vw,64px);
+      font-weight: 400;
+      line-height: .98;
+      letter-spacing: -.04em;
+      color: var(--forest-dark);
+    }
+
+    .availability-copy {
+      color: rgba(24,35,30,.64);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .availability-card {
+      padding: clamp(18px,3vw,30px);
+      border: 1px solid rgba(23,61,49,.09);
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 16px 45px rgba(17,42,32,.07);
+    }
+
+    .availability-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .availability-month {
+      text-align: center;
+    }
+
+    .availability-month small {
+      display: block;
+      margin-bottom: 4px;
+      color: #b74949;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .availability-month strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--forest-dark);
+    }
+
+    .availability-nav {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(23,61,49,.12);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--forest-dark);
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .availability-grid {
+      display: grid;
+      grid-template-columns: repeat(7,1fr);
+      gap: 6px;
+    }
+
+    .availability-day-name {
+      padding: 6px 2px;
+      text-align: center;
+      color: rgba(24,35,30,.42);
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .availability-day {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(23,61,49,.08);
+      border-radius: 11px;
+      background: #f7faf7;
+      color: #355247;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .availability-day.empty {
+      visibility: hidden;
+    }
+
+    .availability-day.past {
+      opacity: .34;
+    }
+
+    .availability-day.available {
+      background: #edf8f1;
+      color: #34774d;
+    }
+
+    .availability-day.booked {
+      background: #fbecec;
+      border-color: #b74949;
+      color: #b74949;
+    }
+
+    .availability-day.today {
+      outline: 2px solid #b74949;
+      outline-offset: -2px;
+    }
+
+    .availability-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 16px;
+      color: rgba(24,35,30,.55);
+      font-size: 9px;
+    }
+
+    .availability-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .availability-dot.available { background:#48a96c; }
+    .availability-dot.booked { background:#b74949; }
+
+    .availability-status {
+      min-height: 18px;
+      margin-top: 13px;
+      color: rgba(24,35,30,.52);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .availability-status.error {
+      color: #a54848;
+    }
+
+    @media(max-width:760px) {
+      .availability-head {
+        grid-template-columns:1fr;
+        gap:10px;
+      }
+
+      .availability-section {
+        padding:54px 0;
+      }
+
+      .availability-title {
+        font-size:clamp(34px,10vw,44px);
+      }
+
+      .availability-card {
+        padding:15px;
+        border-radius:19px;
+      }
+
+      .availability-grid {
+        gap:4px;
+      }
+
+      .availability-day {
+        min-height:44px;
+        border-radius:9px;
+        font-size:10px;
+      }
+    }
+
   </style>
 </head>
 
@@ -361,6 +564,41 @@
   </main>
 
 
+
+      <section class="availability-section" id="availability">
+        <div class="shell">
+          <div class="availability-head">
+            <div>
+              <div class="kicker" data-i18n="availabilityKicker">DISPONIBILITATE LIVE</div>
+              <h2 class="availability-title" data-i18n="availabilityTitle">Calendar Suite 2 · Red</h2>
+            </div>
+            <p class="availability-copy" data-i18n="availabilityCopy">
+              Calendarul este sincronizat cu rezervările proprietății. Zilele marcate ca ocupate nu sunt disponibile pentru rezervare.
+            </p>
+          </div>
+
+          <div class="availability-card">
+            <div class="availability-top">
+              <button class="availability-nav" id="availabilityPrev" type="button" aria-label="Previous month">‹</button>
+              <div class="availability-month">
+                <small>SUITE 2 · RED</small>
+                <strong id="availabilityMonth">—</strong>
+              </div>
+              <button class="availability-nav" id="availabilityNext" type="button" aria-label="Next month">›</button>
+            </div>
+
+            <div class="availability-grid" id="availabilityGrid"></div>
+
+            <div class="availability-legend">
+              <span><i class="availability-dot available"></i><b data-i18n="availabilityAvailable">Disponibil</b></span>
+              <span><i class="availability-dot booked"></i><b data-i18n="availabilityBooked">Ocupat</b></span>
+            </div>
+
+            <p class="availability-status" id="availabilityStatus"></p>
+          </div>
+        </div>
+      </section>
+
   <section class="bottom-cta">
     <div class="shell">
       <div class="kicker" style="color:#d8b885" data-i18n="ctaKicker">REZERVARE</div>
@@ -392,6 +630,11 @@
     backHome: "Înapoi la cazare",
     bookNow: "Verifică disponibilitatea",
     seeDetails: "Vezi detalii",
+    availabilityKicker: "DISPONIBILITATE LIVE",
+    availabilityTitle: "Calendar Suite 2 · Red",
+    availabilityCopy: "Calendarul este sincronizat cu rezervările proprietății. Zilele marcate ca ocupate nu sunt disponibile pentru rezervare.",
+    availabilityAvailable: "Disponibil",
+    availabilityBooked: "Ocupat",
     factCapacityLabel: "Capacitate",
     factCapacity: "2 persoane",
     factBedroomLabel: "Dormitor",
@@ -436,6 +679,11 @@
     backHome: "Back to stays",
     bookNow: "Check availability",
     seeDetails: "See details",
+    availabilityKicker: "LIVE AVAILABILITY",
+    availabilityTitle: "Suite 2 · Red calendar",
+    availabilityCopy: "This calendar is synchronized with the property reservations. Dates marked as occupied are not available to book.",
+    availabilityAvailable: "Available",
+    availabilityBooked: "Occupied",
     factCapacityLabel: "Capacity",
     factCapacity: "2 guests",
     factBedroomLabel: "Bedroom",
@@ -480,6 +728,11 @@
     backHome: "Zurück zur Unterkunft",
     bookNow: "Verfügbarkeit prüfen",
     seeDetails: "Details ansehen",
+    availabilityKicker: "LIVE-VERFÜGBARKEIT",
+    availabilityTitle: "Kalender Suite 2 · Red",
+    availabilityCopy: "Dieser Kalender ist mit den Reservierungen der Unterkunft synchronisiert. Als belegt markierte Tage sind nicht verfügbar.",
+    availabilityAvailable: "Verfügbar",
+    availabilityBooked: "Belegt",
     factCapacityLabel: "Kapazität",
     factCapacity: "2 Gäste",
     factBedroomLabel: "Schlafzimmer",
@@ -542,6 +795,221 @@
     buttons.forEach(button => {
       button.addEventListener("click", () => applyLanguage(button.dataset.lang));
     });
+
+
+    /* =========================================================
+       LIVE AVAILABILITY
+       ========================================================= */
+
+    const SUPABASE_PUBLIC_URL = "https://cimdefypgbkfizyykhkm.supabase.co";
+    const SUPABASE_PUBLIC_KEY = "sb_publishable_Ps8bDeuKhgf2NY4lNdGoOA_fQP15uAD";
+    const PUBLIC_WEBSITE_SLUG = "cucu-residence";
+    const PUBLIC_PROPERTY_SLUG = "cucu-suite-two";
+
+    const availabilityGrid = document.getElementById("availabilityGrid");
+    const availabilityMonth = document.getElementById("availabilityMonth");
+    const availabilityPrev = document.getElementById("availabilityPrev");
+    const availabilityNext = document.getElementById("availabilityNext");
+    const availabilityStatus = document.getElementById("availabilityStatus");
+
+    let availabilityDate = new Date();
+    availabilityDate.setDate(1);
+    let availabilityRequestId = 0;
+
+    function availabilityDateKey(year, month, day) {
+      return (
+        year + "-" +
+        String(month + 1).padStart(2, "0") + "-" +
+        String(day).padStart(2, "0")
+      );
+    }
+
+    function availabilityParse(value) {
+      const parts = String(value).split("-").map(Number);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    function availabilityBoundary(year, month) {
+      const date = new Date(year, month, 1);
+      return availabilityDateKey(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+    }
+
+    async function loadAvailability(year, month) {
+      const fromDate = availabilityBoundary(year, month);
+      const toDate = availabilityBoundary(year, month + 1);
+
+      const response = await fetch(
+        SUPABASE_PUBLIC_URL + "/rest/v1/rpc/get_public_availability",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_PUBLIC_KEY,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            p_website_slug: PUBLIC_WEBSITE_SLUG,
+            p_property_slug: PUBLIC_PROPERTY_SLUG,
+            p_from: fromDate,
+            p_to: toDate
+          }),
+          cache: "no-store"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Availability HTTP " + response.status);
+      }
+
+      const ranges = await response.json();
+      const booked = new Set();
+      const monthStart = availabilityParse(fromDate);
+      const monthEnd = availabilityParse(toDate);
+
+      (ranges || []).forEach(range => {
+        let current = availabilityParse(range.check_in);
+        const checkOut = availabilityParse(range.check_out);
+
+        if (current < monthStart) current = new Date(monthStart);
+
+        while (current < checkOut && current < monthEnd) {
+          booked.add(
+            availabilityDateKey(
+              current.getFullYear(),
+              current.getMonth(),
+              current.getDate()
+            )
+          );
+          current.setDate(current.getDate() + 1);
+        }
+      });
+
+      return booked;
+    }
+
+    function availabilityLanguage() {
+      return ["ro","en","de"].includes(document.documentElement.lang)
+        ? document.documentElement.lang
+        : "ro";
+    }
+
+    function renderAvailabilityGrid(year, month, booked) {
+      availabilityGrid.innerHTML = "";
+
+      const language = availabilityLanguage();
+      const dayNames = {
+        ro:["L","Ma","Mi","J","V","S","D"],
+        en:["M","T","W","T","F","S","S"],
+        de:["M","D","M","D","F","S","S"]
+      }[language];
+
+      dayNames.forEach(name => {
+        const el = document.createElement("div");
+        el.className = "availability-day-name";
+        el.textContent = name;
+        availabilityGrid.appendChild(el);
+      });
+
+      const firstDay = new Date(year, month, 1);
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      let offset = firstDay.getDay();
+      offset = offset === 0 ? 7 : offset;
+
+      for (let i = 1; i < offset; i++) {
+        const empty = document.createElement("div");
+        empty.className = "availability-day empty";
+        availabilityGrid.appendChild(empty);
+      }
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      for (let day = 1; day <= totalDays; day++) {
+        const date = new Date(year, month, day);
+        const key = availabilityDateKey(year, month, day);
+        const el = document.createElement("div");
+
+        el.className =
+          "availability-day " +
+          (booked.has(key) ? "booked" : "available");
+
+        if (date < today) el.classList.add("past");
+
+        if (
+          date.getFullYear() === today.getFullYear() &&
+          date.getMonth() === today.getMonth() &&
+          date.getDate() === today.getDate()
+        ) {
+          el.classList.add("today");
+        }
+
+        el.textContent = day;
+        availabilityGrid.appendChild(el);
+      }
+    }
+
+    async function renderAvailability() {
+      const requestId = ++availabilityRequestId;
+      const year = availabilityDate.getFullYear();
+      const month = availabilityDate.getMonth();
+      const language = availabilityLanguage();
+      const locale = language === "ro" ? "ro-RO" : language === "de" ? "de-DE" : "en-GB";
+
+      availabilityMonth.textContent =
+        new Intl.DateTimeFormat(locale, {month:"long", year:"numeric"})
+          .format(availabilityDate);
+
+      availabilityStatus.className = "availability-status";
+      availabilityStatus.textContent =
+        language === "ro"
+          ? "Se încarcă disponibilitatea..."
+          : language === "de"
+            ? "Verfügbarkeit wird geladen..."
+            : "Loading availability...";
+
+      try {
+        const booked = await loadAvailability(year, month);
+        if (requestId !== availabilityRequestId) return;
+
+        renderAvailabilityGrid(year, month, booked);
+        availabilityStatus.textContent = "";
+      }
+      catch (error) {
+        console.error(error);
+        if (requestId !== availabilityRequestId) return;
+
+        availabilityGrid.innerHTML = "";
+        availabilityStatus.className = "availability-status error";
+        availabilityStatus.textContent =
+          language === "ro"
+            ? "Disponibilitatea live nu este disponibilă momentan. Trimite o cerere pentru confirmarea perioadei."
+            : language === "de"
+              ? "Die Live-Verfügbarkeit ist momentan nicht verfügbar. Bitte sendet eine Anfrage zur Bestätigung."
+              : "Live availability is temporarily unavailable. Please send a request to confirm your dates.";
+      }
+    }
+
+    availabilityPrev.addEventListener("click", () => {
+      availabilityDate.setMonth(availabilityDate.getMonth() - 1);
+      renderAvailability();
+    });
+
+    availabilityNext.addEventListener("click", () => {
+      availabilityDate.setMonth(availabilityDate.getMonth() + 1);
+      renderAvailability();
+    });
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        window.setTimeout(renderAvailability, 0);
+      });
+    });
+
+    renderAvailability();
+
 
     const saved = localStorage.getItem("cucuResidenceLanguage");
     applyLanguage(["ro","en","de"].includes(saved) ? saved : "ro");

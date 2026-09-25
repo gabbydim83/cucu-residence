@@ -4328,6 +4328,105 @@
       .eb-card { flex-basis: 72vw; }
     }
 
+  
+    /* =========================================================
+       SITE CREDIT / WEBSITE CTA
+       ========================================================= */
+
+    .site-credit {
+      padding: 34px 22px;
+      background: #0a211a;
+      color: #fff;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .site-credit-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .site-credit-copy small {
+      display: block;
+      margin-bottom: 6px;
+      color: rgba(255,255,255,.44);
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .site-credit-copy strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(23px, 2.4vw, 34px);
+      font-weight: 400;
+      line-height: 1.08;
+    }
+
+    .site-credit-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .site-credit-contact {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--forest-dark);
+      font-size: 11px;
+      font-weight: 800;
+      transition: transform .22s ease;
+    }
+
+    .site-credit-contact:hover {
+      transform: translateY(-2px);
+    }
+
+    .site-credit-owner {
+      color: rgba(255,255,255,.48);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .10em;
+    }
+
+    @media (max-width: 760px) {
+      .site-credit {
+        padding: 27px 18px;
+      }
+
+      .site-credit-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .site-credit-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .site-credit-copy strong {
+        font-size: 25px;
+      }
+
+      .site-credit-contact {
+        min-height: 42px;
+        padding: 0 15px;
+      }
+    }
+
   </style>
 </head>
 
@@ -5520,6 +5619,33 @@
 
 
 
+
+  <!-- =======================================================
+       WEBSITE CREDIT
+       ======================================================= -->
+  <section class="site-credit">
+    <div class="site-credit-inner">
+      <div class="site-credit-copy">
+        <small data-i18n="siteCreditKicker">WEBSITE & DIGITAL EXPERIENCE</small>
+        <strong data-i18n="siteCreditTitle">Vrei un website ca acesta? Ia legătura cu noi.</strong>
+      </div>
+
+      <div class="site-credit-actions">
+        <a
+          class="site-credit-contact"
+          href="https://wa.me/40755687296?text=Salut!%20Am%20vazut%20website-ul%20Cucu%20Residence%20si%20as%20dori%20un%20website%20similar."
+          target="_blank"
+          rel="noopener"
+        >
+          <span data-i18n="siteCreditButton">Ia legătura cu noi</span>
+          <span>↗</span>
+        </a>
+
+        <a class="site-credit-owner" href="owner.html">Owner access</a>
+      </div>
+    </div>
+  </section>
+
   <!-- =======================================================
        PROPERTY IMAGE LIGHTBOX
        ======================================================= -->
@@ -6239,6 +6365,10 @@
         menuBook:
           "Rezervă",
 
+        siteCreditKicker: "WEBSITE & EXPERIENȚĂ DIGITALĂ",
+        siteCreditTitle: "Vrei un website ca acesta? Ia legătura cu noi.",
+        siteCreditButton: "Ia legătura cu noi",
+
         menuFooter:
           "Brașov · Transylvania"
       },
@@ -6885,6 +7015,10 @@
         menuBook:
           "Book your stay",
 
+        siteCreditKicker: "WEBSITE & DIGITAL EXPERIENCE",
+        siteCreditTitle: "Want a website like this? Get in touch with us.",
+        siteCreditButton: "Get in touch",
+
         menuFooter:
           "Brașov · Transylvania"
       },
@@ -7530,6 +7664,10 @@
 
         menuBook:
           "Aufenthalt buchen",
+
+        siteCreditKicker: "WEBSITE & DIGITALES ERLEBNIS",
+        siteCreditTitle: "Möchtest du eine Website wie diese? Kontaktiere uns.",
+        siteCreditButton: "Kontakt aufnehmen",
 
         menuFooter:
           "Brașov · Transsilvanien"
